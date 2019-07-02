@@ -1,0 +1,8 @@
+{
+    "database_host": "localhost",
+    "database_port": "3306",
+    "database_username": "root",
+    "database_password": "",
+    "database_name": "simple_wallet"
+}
+  
