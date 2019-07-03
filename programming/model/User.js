@@ -11,6 +11,6 @@ module.exports = (sequelize, type) => {
       surname: type.STRING(200),
       gender: type.INTEGER,
       email: type.STRING(200),
-      role: type.INTEGER, // 0 for admin . 1 for others
+      role: type.INTEGER, // 1 for admin . 0 for others
   } , { underscored: true })
 }

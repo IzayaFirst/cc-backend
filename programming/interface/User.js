@@ -21,7 +21,19 @@ function createUser({
   })
 }
 
+function findUserByUsernameAndPassword({ 
+  username,
+  password,
+}) { 
+  return DB.User.findOne({
+    where: {
+      username,
+      password: sha1(password),
+    }
+  })
+}
 
 module.exports = {
   createUser,
+  findUserByUsernameAndPassword,
 }

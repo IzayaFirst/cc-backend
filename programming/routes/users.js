@@ -17,7 +17,7 @@ router.post('/', async function(req, res, next) {
       surname,
       gender,
       email,
-      is_admin = 1, 
+      is_admin = 0, 
     }
   } = req
 
@@ -36,7 +36,6 @@ router.post('/', async function(req, res, next) {
         email,
         role: is_admin ? 1 : 0, 
       })
-      console.log('user', user.dataValues)
       const token = jwt.sign(user.dataValues)
       return res.status(201).json(Object.assign(user.dataValues, { token }))
     } catch(err) {
@@ -44,7 +43,41 @@ router.post('/', async function(req, res, next) {
       return res.status(500).json(err)
     }
   }
+})
 
+router.post('/login', async function(req, res, next) {
+  const {
+    body: {
+      username = '',
+      password = '',
+    }
+  } = req
+
+  if(username.trim().length == 0 || password.trim().length == 0 ) {
+    return res.status(422).json({
+      "message": 'paramter is invalid.'
+    })
+  } else {
+    try {
+      const user = await userInterface.findUserByUsernameAndPassword({
+        username,
+        password, 
+      })
+      if(user && user.dataValues) {
+        const token = jwt.sign(user.dataValues)
+        return res.status(200).json(Object.assign(user.dataValues, { token }))  
+      } else {
+        return res.status(404).json({
+          message: 'Cannot find username and password'
+        })  
+
+      }
+      console.log('user', user.dataValues)
+    } catch(err) {
+      console.log('err', err)
+      return res.status(500).json(err)
+    }
+  }
 })
 
 module.exports = router;

@@ -5,7 +5,10 @@ module.exports = (sequelize, type) => {
         primaryKey: true,
         autoIncrement: true
       },
-      currency_name: type.DOUBLE,
+      currency_name: {
+        type: type.STRING(10),
+        unique: true,
+      },
       current_exchange_balance: type.DOUBLE,
     } , { underscored: true })
 }
