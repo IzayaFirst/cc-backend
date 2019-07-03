@@ -10,6 +10,27 @@ function addCurrency({
   })
 }
 
+function findCurrencybyId({
+  id,
+}) {
+  return DB.Currency.findByPk(id)
+}
+
+function updateCurrency({
+  id,
+  current_exchange_balance, 
+}) { 
+  return DB.Currency.update({
+    current_exchange_balance, 
+  }, {
+    where: {
+      id,
+    }
+  })
+}
+
 module.exports = {
   addCurrency,
+  findCurrencybyId,
+  updateCurrency
 }
