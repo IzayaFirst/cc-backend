@@ -7,7 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('cc-backend:server');
 var http = require('http');
-
+var DB = require('../model')
 /**
  * Get port from environment and store in Express.
  */
@@ -18,6 +18,7 @@ app.set('port', port);
 /**
  * Create HTTP server.
  */
+
 
 var server = http.createServer(app);
 
@@ -82,7 +83,15 @@ function onError(error) {
  */
 
 function onListening() {
+  DB.sequelize.sync()
+  .then(() => {
+    console.log(`Database & tables created!`)
+  }).catch((err) => {
+    console(err)
+  })
+
   var addr = server.address();
+  console.log('running at port: ', addr.port)
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
