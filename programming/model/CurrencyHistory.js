@@ -6,5 +6,6 @@ module.exports = (sequelize, type) => {
         autoIncrement: true
       },
       currency_price: type.DOUBLE,
+      currency_id: type.INTEGER,
     } , { underscored: true })
 }

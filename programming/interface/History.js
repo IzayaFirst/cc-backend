@@ -5,8 +5,8 @@ function addCurrencyHistory({
   currency_id, 
 }) { 
   return DB.CurrencyHistory.create({
+    currency_price,
     currency_id,
-    currency_price, 
   })
 }
 

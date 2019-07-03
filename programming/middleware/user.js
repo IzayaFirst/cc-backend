@@ -9,7 +9,7 @@ module.exports = async (req, res, next) => {
   if(authorization || authorization.trim().length > 0) {
     try {
       const data = await jwt.unsign(authorization)
-      if(data && data.id && data.role == 1) {
+      if(data && data.id && data.role == 0) {
         req.userId = data.id
         next()
       } else {

@@ -7,6 +7,9 @@ module.exports = (sequelize, type) => {
       },
       amount: type.DOUBLE,
       price: type.DOUBLE,
-      action: type.INTEGER, // 1 for inbound . 2 for outbound
+      action: type.INTEGER, 
+      wallet_id: type.INTEGER,
+      currency_id: type.INTEGER,
+      // 1 for inbound . 2 for outbound
   } , { underscored: true })
 }

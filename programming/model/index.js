@@ -21,17 +21,25 @@ const Currency = CurrencyModel(sequelize, Sequelize)
 const CurrencyHistory = CurrencyHistoryModel(sequelize, Sequelize)
 const Transaction = TransactionModel(sequelize, Sequelize)
 
-User.hasMany(Wallet)
-Wallet.belongsTo(User)
+const Owner = User.hasMany(Wallet)
+const OwnerOf = Wallet.belongsTo(User, {
+  foreignKey: 'user_id'
+})
 
-Wallet.hasMany(Transaction)
-Transaction.belongsTo(Wallet)
+const Paid = Wallet.hasMany(Transaction)
+const PaidOf =Transaction.belongsTo(Wallet, {
+  foreignKey: 'wallet_id'
+})
 
-Currency.hasMany(Transaction)
-Transaction.belongsTo(Currency)
+const Trade = Currency.hasMany(Transaction)
+const TradeOf = Transaction.belongsTo(Currency, {
+  foreignKey: 'currency_id'
+})
 
-Currency.hasMany(CurrencyHistory)
-CurrencyHistory.belongsTo(Currency)
+const History = Currency.hasMany(CurrencyHistory)
+const Historyof = CurrencyHistory.belongsTo(Currency, {
+  foreignKey: 'currency_id' 
+})
 
 
 module.exports = {
@@ -41,4 +49,6 @@ module.exports = {
   Currency,
   CurrencyHistory,
   Transaction,
+  History,
+  Historyof,
 }

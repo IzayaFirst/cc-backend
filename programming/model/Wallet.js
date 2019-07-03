@@ -7,5 +7,6 @@ module.exports = (sequelize, type) => {
       },
       wallet_name: type.STRING(200),
       wallet_detail: type.STRING(200),
+      user_id: type.INTEGER
   } , { underscored: true })
 }

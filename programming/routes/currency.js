@@ -8,7 +8,7 @@ const numeral = require('numeral');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.json({
-    message: 'Simple Wallet API'
+    message: 'Currency Wallet API'
   })
 });
 
@@ -26,7 +26,7 @@ router.patch('/:currency_id', adminMiddleware, async function(req, res, next) {
       "message": 'paramter is invalid.'
     })
   } else {
-    const findCurrency =await currencyInterface.findCurrencybyId({ 
+    const findCurrency = await currencyInterface.findCurrencybyId({ 
       id: numeral(currency_id).value()
     })
     console.log('findCurrency.dataValues', findCurrency.dataValues)
@@ -59,10 +59,6 @@ router.patch('/:currency_id', adminMiddleware, async function(req, res, next) {
           "message": 'cannot update currency'
         })
       }
-      console.log('updateCurrency', updateCurrency)
-      return res.status(201).json({
-        "message": '0.'
-      })
     } else {
       return res.status(404).json({
         "message": 'cannot find currency id.'
@@ -96,7 +92,6 @@ router.post('/', adminMiddleware, async function(req, res, next) {
             current_exchange_balance: update_balance,
           }
         } = addCurrency
-
         const addHistory = await historyInterface.addCurrencyHistory({
           currency_price: update_balance,
           currency_id: id
@@ -117,9 +112,6 @@ router.post('/', adminMiddleware, async function(req, res, next) {
           message: 'cannot add currency'
         })
       }
-      return res.json({
-        message: 'Simple Wallet API'
-      })
     } catch(err) {
       return res.status(500).json(err)
     }
