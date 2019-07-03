@@ -22,8 +22,16 @@ function getBalanceByCurrency({ currency_id, wallet_id }) {
     })
 }
 
+function getBalanceGroupByCurrency({ currency_id }) {
+    return DB.sequelize.query('select (select if(sum(price * amount) > 0 ,sum(price * amount), 0 ) from transactions where currency_id = :c and action = :a) - (select if(sum(price * amount) > 0, sum(price * amount), 0) from transactions where currency_id = :c and action = :aa) as balance' , {
+        replacements: { c: currency_id, a: depositAction, aa: withdrawAction  },
+    })
+}
+
+
 module.exports = {
     deposit,
     withdraw,
     getBalanceByCurrency,
+    getBalanceGroupByCurrency,
 }
