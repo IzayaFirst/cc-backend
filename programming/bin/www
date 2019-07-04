@@ -87,7 +87,7 @@ function onListening() {
   .then(() => {
     console.log(`Database & tables created!`)
   }).catch((err) => {
-    console(err)
+    console.log(err)
   })
 
   var addr = server.address();

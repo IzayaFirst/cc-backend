@@ -9,6 +9,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', async function(req, res, next) {
+  console.log('..')
   const {
     body: {
       username = '',

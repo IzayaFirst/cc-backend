@@ -9,7 +9,31 @@ const currencyInterface = require('../interface/Currency')
 const transactionInterface = require('../interface/Transaction')
 
 /* GET home page. */
-router.get('/total_balance', adminMiddleware,  async function(req, res, next) {
+
+router.get('/total_balance/wallet', adminMiddleware,  async function(req, res, next) {
+  const {
+    query: {
+      wallet_id
+    }
+  } = req
+  if(isNaN(wallet_id) || numeral(wallet_id).value() <= 0 ) {
+    return res.status(422).json({
+      "message": 'paramter is invalid.'
+    })
+  } else {
+    try {
+      const getBalance = await transactionInterface.getBalanceGroupByWallet({ wallet_id, })
+      const [ balance ] =  getBalance
+      const [ totalBalance ] = balance
+      return res.status(200).json(totalBalance)
+    } catch(err) {
+      return res.status(500).json(err)
+    }
+  }
+});
+
+
+router.get('/total_balance/currency', adminMiddleware,  async function(req, res, next) {
   const {
     query: {
       currency_id
@@ -29,7 +53,6 @@ router.get('/total_balance', adminMiddleware,  async function(req, res, next) {
       return res.status(500).json(err)
     }
   }
-
 });
 
 router.post('/deposit', userMiddleware, async function(req, res, next) {
